@@ -1,0 +1,188 @@
+<!-- Code adapted from Rex Van der Spuy's book: Foundation Game Design With HTML5 and JavaScript. 
+It was a very helpful book!
+-->
+
+
+<!doctype html>
+<title>Watson's Quest</title>
+
+<canvas width="550" height="400" style="border: 1px dashed black"></canvas>
+
+<script src="requestAnimationFramePolyfill.js"></script>
+<script>
+
+canvasWidth = 600;
+canvasHeight = 400;
+
+//--- The sprite object
+
+var spriteObject =
+{
+  sourceX: 0,
+  sourceY: 0,
+  sourceWidth: 64,
+  sourceHeight: 64,
+  x: 0,
+  y: 0,
+  width: 64,
+  height: 64,
+  vx: 0,
+  vy: 0
+};
+
+//--- The main program
+
+//The canvas and its drawing surface
+var canvas = document.querySelector("canvas");
+var drawingSurface = canvas.getContext("2d");
+
+//An array to store the sprites
+var sprites = [];
+
+//Create the mouse sprite and center it
+var mouse = Object.create(spriteObject);
+mouse.x = 243;
+mouse.y = 168;
+sprites.push(mouse);
+
+//Load the image
+var image = new Image();
+image.addEventListener("load", loadHandler, false);
+image.src = "mouse.png";
+
+//Arrow key codes
+var UP = 38;
+var DOWN = 40;
+var RIGHT = 39;
+var LEFT = 37;
+
+//Directions
+var direction = "none";
+
+//Add keyboard listeners
+window.addEventListener("keydown", function(event)
+{
+  switch(event.keyCode)
+  {
+    case UP:
+	    direction = "up";
+	    break;
+	  
+	  case DOWN:
+	    direction = "down";
+	    break;
+	    
+	  case LEFT:
+	    direction = "left";
+	    break;  
+	    
+	  case RIGHT:
+	    direction = "right";
+	    break; 
+  }
+}, false);
+
+
+
+function loadHandler()
+{ 
+  update();
+}
+
+function update()
+{
+  //The animation loop
+  requestAnimationFrame(update, canvas);
+  
+  speed = 3
+  
+  //Up
+  if(direction == "up")
+  {
+    mouse.vy = -speed;
+  }
+  //Down
+  else if(direction == "down")
+  {
+    mouse.vy = speed;
+  }
+  //Left
+  else if(direction == "left")
+  {
+    mouse.vx = -speed;
+  }
+  //Right
+  else if(direction == "right")
+  {
+    mouse.vx = speed;
+  }
+  
+  if (direction == "up" || direction == "down"){
+	mouse.vx = 0;
+  }
+  if (direction == "right" || direction == "left"){
+	mouse.vy = 0;
+  } 
+  
+  
+  //loop around screen
+  if(mouse.x + mouse.width < 0)
+  {
+    mouse.x = canvasWidth;
+  }
+  
+  if(mouse.x > canvasWidth)
+  {
+    mouse.x = 0 - mouse.width;
+  }
+  
+  if(mouse.y + mouse.height < 0)
+  {
+    mouse.y = canvasHeight;
+  }
+  
+  if(mouse.y > canvasHeight)
+  {
+    mouse.y = 0 - mouse.height;
+  }
+  
+  
+  	
+	
+	
+  //Move the mouse
+  mouse.x += mouse.vx;
+  mouse.y += mouse.vy;
+  
+  //Render the sprite
+  render();
+}
+
+function render()
+{ 
+  //Clear the previous animation frame
+  drawingSurface.clearRect(0, 0, canvas.width, canvas.height);
+  
+ // canvas.font = "30px Arial";
+ // canvas.fillText(mouse.vx,10,50);
+  
+  //Loop through all the sprites and use 
+  //their properties to display them
+  if(sprites.length !== 0)
+  {
+    for(var i = 0; i < sprites.length; i++)
+    {
+      var sprite = sprites[i];
+      drawingSurface.drawImage
+      (
+        image, 
+        sprite.sourceX, sprite.sourceY, 
+        sprite.sourceWidth, sprite.sourceHeight,
+        Math.floor(sprite.x), Math.floor(sprite.y), 
+        sprite.width, sprite.height
+      ); 
+    }
+  }
+}
+
+</script>
