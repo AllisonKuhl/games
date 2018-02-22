@@ -13,8 +13,8 @@ var menu = new Image();
 menu.src = "./images/menu-colored.png";
 var background = new Image(); 
 background.src = "./images/desert.jpg"; 
-//var moses = new Image();
-//moses.src = "./images/moses.png";
+var moses = new Image();
+moses.src = "./images/moses.png";
 var army1 = new Image();
 army1.src = "./images/army1.png";
 var army2 = new Image();
@@ -110,7 +110,7 @@ function gameOver(){
  
  //lowers hands
    if (degree>0){
-	degree-=lowerspeed;
+	//degree-=lowerspeed;
    }
     
    //moves army
@@ -166,7 +166,7 @@ function gameOver(){
 	
 	//arm
 	ctx.beginPath();
-	ctx.fillStyle="DarkGoldenRod";
+	ctx.fillStyle="#cb9a6d";
 	ctx.rect(-20,-40,50,120);
 	ctx.fill();
 	ctx.stroke();
@@ -182,8 +182,9 @@ function gameOver(){
 	ctx.stroke();
 		
 	
-	//ctx.drawImage(moses,50,100);
+	ctx.drawImage(moses,50,120);
 	
+	/*
 	
     //body
 	
@@ -211,7 +212,7 @@ function gameOver(){
 	ctx.fill();
 	ctx.stroke();
 	
-	
+	*/
 	
 	//front arm
 	
@@ -236,7 +237,7 @@ function gameOver(){
 	
 	//arm
 	ctx.beginPath();
-	ctx.fillStyle="DarkGoldenRod";
+	ctx.fillStyle="#cb9a6d";
 	ctx.rect(-30,-20,50,120);
 	ctx.fill();
 	ctx.stroke();
