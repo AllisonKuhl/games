@@ -32,7 +32,10 @@ var lowerspeed = 0.1;
 //timer
 var time = 0;
 //how far Israelite army is
-var armyStart = -300;
+var stalemate = -300;
+var advanceDir = .5;
+var armyX = -300;
+
 var timer = 0;
 
 //space key events
@@ -47,12 +50,15 @@ window.addEventListener("keyup", function(event)
   }
 
 });
+
+
  
 //game loop
  function update() 
  {  
- 
-	if (gameState == PLAYING){
+	if (gameState == MENU) {
+		drawMenu();
+	}else if (gameState == PLAYING){
 		desertRumble();
 	}else if (gameState == OVER){
 		gameOver();
@@ -102,36 +108,78 @@ function gameOver(){
 	ctx.fillStyle="white";
 	ctx.fillText("Play Again",443,390);
 	
-
+	
 }
  
+function drawMenu(){
+
+	ctx.drawImage(menu,0,0);
+	
+	/*
+	//start button
+	ctx.beginPath();
+	ctx.fillStyle="white";
+	ctx.rect(300,350,180,70);
+	ctx.fill();
+	ctx.stroke();
+	
+	ctx.font = "40px Courier";
+	ctx.fillStyle="black";
+	ctx.fillText("Begin",332,395);
+	*/
+}
  
- function desertRumble(){
+function desertRumble(){
  
- //lowers hands
+	var zone = 20;
+ //lowers hands a little bit each time
    if (degree>0){
-	//degree-=lowerspeed;
-   }
-    
-   //moves army
-   if (degree < 90){
-      armyStart=-400;
-   }
-   if (degree > 90){
-      armyStart=-250;
-   }
-    if (degree > 150){
-      armyStart=-20;
+	degree-=lowerspeed;
    }
    
-   
-   //increases speed hand is lowered over time
+    //increases speed so that it lowers quicker with time
    time += 1;
    timer += 1;
    if (time == 100){
 	  lowerspeed+=.03;
 	  time = 0;
    }
+   
+    
+   //the tides of battle
+   
+   //focuses on one point depending on how high arms are
+   if (degree < 90){
+      stalemate=-400;
+   }
+   if (degree >= 90){
+      stalemate=-130;
+   }
+    if (degree > 150){
+      stalemate=-20;
+   }
+   
+   //moves army to focus on this point
+   if (armyX > stalemate+zone){
+		armyX -= 1;
+   }else if (armyX < stalemate-zone){
+		armyX += 1;
+   }
+   
+   
+   //jiggles around the point a bit for variety
+   if (armyX > stalemate-zone && armyX < stalemate+zone){
+		armyX+= advanceDir;
+   }
+   if (armyX == stalemate-zone || armyX == stalemate+zone){
+		advanceDir*=-1;
+		armyX+=advanceDir;
+   }
+     
+   
+   
+   
+  
    
    //game over
    if (degree < 10){
@@ -173,46 +221,9 @@ function gameOver(){
 		
 	ctx.restore();
 	
-		
-	//rock Moses is standing on
-	ctx.beginPath();
-	ctx.fillStyle="peru";
-	ctx.rect(0,370,200,400);
-	ctx.fill();
-	ctx.stroke();
-		
-	
+
 	ctx.drawImage(moses,50,120);
 	
-	/*
-	
-    //body
-	
-	ctx.beginPath();
-    ctx.fillStyle="beige";
-	ctx.rect(70,200,90,170);
-	ctx.fill();
-	ctx.stroke();
-	
-	ctx.beginPath();
-    ctx.fillStyle="antiquewhite";
-	ctx.rect(80,130,70,70);
-	ctx.fill();
-	ctx.stroke();
-	
-	ctx.beginPath();
-    ctx.fillStyle="black";
-	ctx.rect(120,140,10,10);
-	ctx.fill();
-	ctx.stroke();
-	
-	ctx.beginPath();
-    ctx.fillStyle="white";
-	ctx.rect(110,160,45,100);
-	ctx.fill();
-	ctx.stroke();
-	
-	*/
 	
 	//front arm
 	
@@ -248,9 +259,17 @@ function gameOver(){
 	
 	
 	//armies
-	ctx.drawImage(army1,armyStart,390);
-    ctx.drawImage(army2,armyStart+635,390);
- 
+	ctx.drawImage(army1,armyX,390);
+    ctx.drawImage(army2,armyX+635,390);
+
+	//rock Moses is standing on
+	ctx.beginPath();
+	ctx.fillStyle="peru";
+	ctx.rect(0,370,200,400);
+	ctx.fill();
+	ctx.stroke();
+	
+	
  }
 
     
