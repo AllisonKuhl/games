@@ -15,10 +15,15 @@ var background = new Image();
 background.src = "./images/desert.jpg"; 
 var moses = new Image();
 moses.src = "./images/moses.png";
-var army1 = new Image();
-army1.src = "./images/army1.png";
-var army2 = new Image();
-army2.src = "./images/army2.png";
+var israelites1 = new Image();
+israelites1.src = "./images/army1.png";
+var israelites2 = new Image();
+israelites2.src = "./images/army1-2.png";
+var amalekites1 = new Image();
+amalekites1.src = "./images/army2.png";
+var amalekites2 = new Image();
+amalekites2.src = "./images/army2-2.png";
+
 
 var endImg = new Image();
 endImg.src = "./images/moses-final.jpg";
@@ -29,15 +34,16 @@ endImg.src = "./images/moses-final.jpg";
 var degree = 80;
 //how quickly Moses' lowers hands
 var lowerspeed = 0.1;
-//timer
+//total time passed
 var time = 0;
 //how far Israelite army is
 var stalemate = -300;
 var advanceDir = .5;
 var armyX = -300;
-
+//controls arm speed
 var timer = 0;
-
+//changes army animation
+var armyTimer = 0;
 //space key events
 //raises hands when space bar is unpressed
 window.addEventListener("keyup", function(event) 
@@ -183,7 +189,7 @@ function desertRumble(){
    
    //game over
    if (degree < 10){
-	   gameState = OVER;
+	 //  gameState = OVER;
    }
    
   //The animation loop 
@@ -195,7 +201,7 @@ function desertRumble(){
   //draws background
   ctx.drawImage(background,0,0, canvas.width,canvas.height);
  
-	
+   //draw the rest
 
 	
 	//arm behind
@@ -222,6 +228,7 @@ function desertRumble(){
 	ctx.restore();
 	
 
+	//it's ya boi
 	ctx.drawImage(moses,50,120);
 	
 	
@@ -259,9 +266,25 @@ function desertRumble(){
 	
 	
 	//armies
-	ctx.drawImage(army1,armyX,390);
-    ctx.drawImage(army2,armyX+635,390);
+	
+	armyTimer += 1;
+	
+	if (armyTimer > 15){
+		ctx.drawImage(israelites1,armyX,390);
+		ctx.drawImage(amalekites2,armyX+635,390)
+	}else {
+		ctx.drawImage(israelites2,armyX,390);
+		ctx.drawImage(amalekites1,armyX+635,390);
+	}
+	if (armyTimer == 30){
+		armyTimer = 0;
+	}
+	
+   
 
+	
+	
+	
 	//rock Moses is standing on
 	ctx.beginPath();
 	ctx.fillStyle="peru";
