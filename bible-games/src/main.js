@@ -271,7 +271,7 @@ function desertRumble(){
 	
 	if (armyTimer > 15){
 		ctx.drawImage(israelites1,armyX,390);
-		ctx.drawImage(amalekites2,armyX+635,390)
+		ctx.drawImage(amalekites2,armyX+635,390);
 	}else {
 		ctx.drawImage(israelites2,armyX,390);
 		ctx.drawImage(amalekites1,armyX+635,390);
