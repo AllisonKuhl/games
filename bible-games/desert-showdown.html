@@ -1,15 +1,53 @@
 <!doctype html> 
 <meta charset="utf-8"> 
-<title>Israelites vs Amelekites: Ultimate Desert Showdown</title> 
+<title>Desert Showdown</title> 
  
  
 <!-- The canvas --> 
 <canvas width="704" height="512" style = "border:5px solid black;"></canvas> 
- 
- 
+
+
+<button id = "start" onclick = "start()"> Start </button>
+<button id = "continue" onclick = "cont()"> Continue</button>
+<button id = "restart" onclick = "restart()"> Play Again </button>
+
 <!-- The game code --> 
 <script src="./src/requestAnimationFramePolyfill.js"></script> 
 <script src="./src/main.js"></script> 
-
  
 </html> 
+
+<style>
+
+	button {
+		width:150px;
+		height:50px;
+		font-family:"courier";
+		font-size:20px;
+	}
+	
+	#start {
+		position:absolute;
+		left: 310px;
+		top: 390px;
+		width:150px;
+		height:50px;
+		font-family:"courier";
+		font-size:20px;
+	}
+	
+	#restart {
+		display:none;
+		position:absolute;
+		left:50px;
+		top:380px;
+	}
+	
+	#continue {
+		display:none;
+		position:absolute;
+		left: 280px;
+		top: 440px;
+	}
+
+</style>
