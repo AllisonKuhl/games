@@ -1,29 +1,46 @@
-
-var MENU = 1;
-var PLAYING = 2;
-var OVER = 3;
-var gameState = PLAYING;
+var START = 1;
+var INSTRUCTIONS = 2;
+var PLAYING = 3;
+var OVER = 4;
+var gameState = START;
 
 
 var canvas = document.querySelector("canvas");  
 var ctx = canvas.getContext("2d"); 
-
+    
 //images
+
 var menu = new Image();
 menu.src = "./images/menu-colored.png";
+var intro1 = new Image();
+intro1.src = "./images/instructions.png";
+var intro2 = new Image();
+intro2.src = "./images/instructions2.png";
+
+var end1 = new Image();
+end1.src = "./images/end1.png";
+var end2 = new Image();
+end2.src = "./images/end2.png";
+
 var background = new Image(); 
 background.src = "./images/desert.jpg"; 
+
 var moses = new Image();
 moses.src = "./images/moses.png";
+
 var israelites1 = new Image();
 israelites1.src = "./images/army1.png";
 var israelites2 = new Image();
 israelites2.src = "./images/army1-2.png";
+
 var amalekites1 = new Image();
 amalekites1.src = "./images/army2.png";
 var amalekites2 = new Image();
 amalekites2.src = "./images/army2-2.png";
 
+var place = 0;
+var intro = [intro1,intro2];
+var end = [end1, end2];
 
 var endImg = new Image();
 endImg.src = "./images/moses-final.jpg";
@@ -34,22 +51,55 @@ endImg.src = "./images/moses-final.jpg";
 var degree = 80;
 //how quickly Moses' lowers hands
 var lowerspeed = 0.1;
-//total time passed
-var time = 0;
+//total 
+var score = 0;
+//previous record
+var bestScore = 0;
 //how far Israelite army is
 var stalemate = -300;
+//advance speed and direction
 var advanceDir = .5;
 var armyX = -300;
 //controls arm speed
-var timer = 0;
+var time = 0;
 //changes army animation
 var armyTimer = 0;
+
+ 
+
+console.log(gameState);
+
+function start() {
+    gameState = INSTRUCTIONS;
+	document.getElementById("start").style.display = 'none';
+}
+
+function cont() {
+	document.getElementById("continue").style.display = 'none';
+	place = 1;
+}
+
+function restart() {
+    gameState = PLAYING;
+	document.getElementById("restart").style.display = 'none';
+	degree = 80;
+	lowerspeed = 0.1;
+	score = 0;
+	stalemate = -300;
+	advanceDir = .5;
+	armyX = -300;
+	time = 0;
+	armyTimer = 0;
+}
+
 //space key events
 //raises hands when space bar is unpressed
 window.addEventListener("keyup", function(event) 
 { 
   if (event.keyCode == 32){
   	
+	score += 1;
+	
     if (degree< 170){
 		degree+=5;
 	 }
@@ -58,83 +108,65 @@ window.addEventListener("keyup", function(event)
 });
 
 
+window.addEventListener("keydown", function(event) 
+{ 
+
+ if (gameState == INSTRUCTIONS){
+	 
+	  if (event.keyCode == 32){
+		if (place == 1){
+			place = 0;
+			gameState = PLAYING;
+	    }else{
+			place +=1;
+		}
+	  }  
+  }
+  
+});
+
  
 //game loop
- function update() 
+function update() 
  {  
-	if (gameState == MENU) {
-		drawMenu();
+ 
+	if (gameState == START) {
+		ctx.drawImage(menu,0,0);
+	}else if (gameState == INSTRUCTIONS){
+		ctx.drawImage(intro[place],0,0);
 	}else if (gameState == PLAYING){
 		desertRumble();
 	}else if (gameState == OVER){
 		gameOver();
 	}
+	
+	requestAnimationFrame(update, canvas); 
  
  }
  
 
  
 function gameOver(){
+	ctx.drawImage(end[place],0,0);
 	
-	
-	//draws background
-	ctx.beginPath();
-	ctx.fillStyle="white";
-	ctx.rect(0,0,canvas.width,canvas.height);
-	ctx.fill();
-	ctx.stroke();
-	
-	ctx.drawImage(endImg,300,100, canvas.width-300,canvas.height-100);
-	
-	
-	//text
-	ctx.font = "30px Arial";
-	ctx.fillStyle="black";
-	ctx.fillText("Growing weary, you lower your hands. The battle",10,40); 
-	ctx.fillText("is nearly lost, but two Israelites hold up your hands.",10,80); 
-	ctx.fillText("With their help (and",10,120); 
-	ctx.fillText("God's) you are",10,160); 
-	ctx.fillText("victorious! Praise",10,200);
-	ctx.fillText("the Lord!",10,240);
-	
-	
-	ctx.fillText("You lasted",50,340);
-	ctx.fillStyle="brown";
-	ctx.fillText(timer/100,100,380);
-	ctx.fillStyle="black";
-	ctx.fillText("seconds!",60,420);
-	
-	//button
-	ctx.beginPath();
-	ctx.fillStyle="brown";
-	ctx.rect(440,350,150,55);
-	ctx.fill();
-	ctx.stroke();
-	
-	ctx.fillStyle="white";
-	ctx.fillText("Play Again",443,390);
-	
+	 //creates new record
+	 if (score > bestScore){
+		bestScore = score;
+	 }
+	 
+	 if (place > 0){
+		ctx.font = "40px Courier";
+		ctx.fillStyle="red";
+		ctx.fillText(score,90,240);
+		document.getElementById("restart").style.display = 'block';		
+	 }else {
+		document.getElementById("continue").style.display = 'block';
+	 }
+	 
 	
 }
  
-function drawMenu(){
 
-	ctx.drawImage(menu,0,0);
-	
-	/*
-	//start button
-	ctx.beginPath();
-	ctx.fillStyle="white";
-	ctx.rect(300,350,180,70);
-	ctx.fill();
-	ctx.stroke();
-	
-	ctx.font = "40px Courier";
-	ctx.fillStyle="black";
-	ctx.fillText("Begin",332,395);
-	*/
-}
- 
 function desertRumble(){
  
 	var zone = 20;
@@ -145,13 +177,12 @@ function desertRumble(){
    
     //increases speed so that it lowers quicker with time
    time += 1;
-   timer += 1;
    if (time == 100){
 	  lowerspeed+=.03;
 	  time = 0;
    }
    
-    
+
    //the tides of battle
    
    //focuses on one point depending on how high arms are
@@ -183,18 +214,13 @@ function desertRumble(){
    }
      
    
-   
-   
-  
-   
+ 
    //game over
    if (degree < 10){
-	 //  gameState = OVER;
+	  gameState = OVER;
    }
    
-  //The animation loop 
-   requestAnimationFrame(update, canvas); 
- 
+   
   //clears canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -213,7 +239,7 @@ function desertRumble(){
 
 	//hand
 	ctx.beginPath();
-	ctx.fillStyle="antiquewhite";
+	ctx.fillStyle="#DDB686";
 	ctx.rect(-10,70,30,30);
 	ctx.fill();
 	ctx.stroke();
@@ -228,7 +254,7 @@ function desertRumble(){
 	ctx.restore();
 	
 
-	//it's ya boi
+	//it's ya boi, Moses
 	ctx.drawImage(moses,50,120);
 	
 	
@@ -248,7 +274,7 @@ function desertRumble(){
 	
 	//hand
 	ctx.beginPath();
-	ctx.fillStyle="antiquewhite";
+	ctx.fillStyle="#DDB686";
 	ctx.rect(-20,90,30,30);
 	ctx.fill();
 	ctx.stroke();
@@ -281,10 +307,6 @@ function desertRumble(){
 	}
 	
    
-
-	
-	
-	
 	//rock Moses is standing on
 	ctx.beginPath();
 	ctx.fillStyle="peru";
@@ -292,6 +314,26 @@ function desertRumble(){
 	ctx.fill();
 	ctx.stroke();
 	
+	
+	//deals with score
+
+	ctx.font = "12px Courier";
+	ctx.fillStyle="black";
+	ctx.fillText("Current Score:",520,100);
+	ctx.fillStyle="brown";
+	ctx.fillText(score,630,100);
+	
+	if (bestScore == 0){
+		ctx.font = "30px Courier";
+		ctx.fillStyle="black";
+		ctx.fillText("Press SPACE to repel the Amalekites!",38 ,50);
+	}else if (bestScore > 0){
+		ctx.font = "12px Courier";
+		ctx.fillStyle="black";
+		ctx.fillText("Previous Record:",504,50);
+		ctx.fillStyle="brown";
+		ctx.fillText(bestScore,630,50);	
+   }
 	
  }
 
