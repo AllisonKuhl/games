@@ -96,6 +96,8 @@ function restart() {
 //raises hands when space bar is unpressed
 window.addEventListener("keyup", function(event) 
 { 
+
+if (gameState == PLAYING){
   if (event.keyCode == 32){
   	
 	score += 1;
@@ -104,6 +106,7 @@ window.addEventListener("keyup", function(event)
 		degree+=5;
 	 }
   }
+ }
 
 });
 
