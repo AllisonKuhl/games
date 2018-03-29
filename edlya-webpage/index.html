@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>EDLYA</title>
+        <meta name="description" content="East District Lutheran Church Canada Young Adults">
+		<meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="css/style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="scripts/menu.js"></script>
+    </head>
+	
+<body>	
+
+<!-- Main page for EDLYA. Coded by Allison Kuhl. Please contact me if you have any questions at allison.kuhl@bell.net -->
+
+
+<header>
+
+	<!--Mobile Menu Button-->
+	<h1> EDLYA</h1>
+	<button class = "toggle-menu">&#9776; Menu</button> 
+	
+	<nav>
+	<ul>
+		<a href = "pages/about.html"><li>About Us</li></a>
+		<a href = "/pages/retreats.html"><li>Retreats</li></a>
+		<a href = "/pages/resources.html"><li>Resources</li></a>
+		<a href = "/pages/registration.html"><li>Register</li></a>
+	</ul>	
+</nav>
+	
+</header>
+
+<div class = "main">
+
+<img src = "./images/homePageBanner.jpg">
+
+<section id = "aboutUs">
+<h2>- About Us - </h2>
+<p>We are a group of Lutheran young adults, run by young adults, for young adults! <a href = "pages/about.html">Learn more.</a></p>
+</section>
+
+<!-- Information in this section is filled out in menu.js -->
+<section id = "nextRetreat">
+<h2>- Next Retreat - </h2>
+	<p><strong>Date: </strong><span class = "date"></span></p>
+	<p><strong>Location: </strong><span class = "location"></span></p>
+	<p><strong>Address: </strong><span class = "address"></span></p>
+</section>
+
+<section id = "getInvolved">
+<h2>Want to get involved?</h2>
+<p>Come to one of our upcoming <a href = "./pages/retreats.html">retreats</a>, check out some of our helpful <a href = "./pages/resources.html">resources</a>, or <a href = "page/contact.html">get in touch</a> with your local circuit rep!</p>
+<p>Join our group on <a href = "facebook">Facebook!</a></p>
+</section>
+
+<div style = "clear:both;"></div>
+
+<section id = "registration">
+<!-- will display only if registration is open -->
+<div id = "yesRegister">
+<a href = "./pages/register.html" id = "registrationButton">REGISTER</a>
+</div>
+
+<!-- will display only if registration is NOT open -->
+<div id = "noRegister">
+<p>Registration is not yet open!</p>
+</div>
+
+</section>
+
+</div>
+
+
+</body>
+
+
+</html>
