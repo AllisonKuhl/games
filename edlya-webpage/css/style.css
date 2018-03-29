@@ -1,0 +1,213 @@
+
+html {
+	background-color:#303031;
+	font-family:arial;
+}
+
+body {
+	margin:0px;
+}
+
+header {
+	background-color:#303031;
+	color:white;
+	margin-top:-20px;
+	width:100%;
+	padding:.05%;
+}
+
+#registrationButton:hover, #registrationButton:focus {
+	color:lightgrey;
+	background-color:#8E1E11;
+}
+
+header h1{
+	padding-left:20px;
+}
+
+#registrationButton {
+	background-color:#AD2314;
+	color:white;
+	font-size:20px;
+	border:black solid 2px;
+	border-radius:25px;
+	padding:20px;
+	width:150px;
+	margin-top:-10px;
+}
+
+#registration{
+	border:none;
+}
+
+#noRegister{
+	font-size:200%;
+	color: #f22613;
+	padding-top:none;
+}
+
+nav {
+	display:none;
+	position:absolute;
+	right:50px;
+	background-color:white;
+	border:black solid 2px;
+	margin-top:-25px;
+	font-size:150%;
+}
+
+a {
+	text-decoration:none;
+	color:#f22613;
+}
+
+nav a {
+	text-decoration:none;
+	color:#624f48;
+}
+
+nav li:hover, nav li:focus {
+	background-color:lightgrey;
+}
+
+nav ul {
+	margin:0px;
+	padding:0px;
+	margin-right:10px;
+}
+nav li {
+	list-style-type: none;
+	padding:5px;
+	padding-top:10px;
+	padding-bottom:10px;
+	width:100%;
+	border-bottom: 1px grey solid;
+}
+
+header button {
+	float:right;
+	margin-top:-54px;
+	margin-right:20px;
+	font-size:120%;
+}
+
+
+img {
+	width:100%;
+}
+
+
+section {
+	background-color:#303031;
+	color:white;
+	text-align:center;
+	border-bottom: 2px white solid;
+	padding:10%;
+}
+
+section h2 {
+	margin-top:0px;
+	margin-bottom:5px;
+	padding-top:10px;
+}
+
+section p {
+	margin:0px;
+	padding:10px;
+}
+
+.main {
+	overflow: auto;
+	padding-bottom: 60px;
+}
+
+
+@media screen and (min-width: 760px) {
+	
+	body {
+		height:100%;
+		background-color:#624f48;
+	}
+	
+	.main {
+		width:70%;
+	    display: block;
+		margin-left: auto;
+		margin-right: auto;
+		background-color:#303031;
+		overflow:hidden;
+		height:100%;
+	}
+
+	section{
+		margin: 0 auto;
+		width: 29.2%;
+		border:none;
+		float:left;
+		padding:2%;
+	}
+	
+	
+	#registration {
+		margin-left: 34%;
+		height:100%;
+		border:none;
+	}
+	
+	
+	.toggle-menu{
+		display:none;
+	}
+	
+	nav {
+		display:block;
+		background:none;
+		border:none;
+		padding:0px;
+		width:100%;
+		margin-left:0px;
+		font-size:110%;
+	}
+	
+	nav ul {
+		padding:0px;
+		margin-left:30%;
+		margin-top:-20px;
+	}
+	
+	nav a:first-child{
+		border:none;
+	}
+	
+	nav li:hover, nav li:focus{
+		color:#f22613;
+		background-color:#303031;
+	}
+	
+	nav li {
+		display:inline;
+		padding-left:5%;
+		padding-right:5%;
+		border:none;
+	}
+	
+	nav a {
+		color:white;
+		border-left: white 2px solid;
+	}
+	
+	
+}
+
+
+@media screen and (min-width: 860px) {
+	
+		nav {
+		font-size:130%;
+		}
+		
+		nav ul {
+		margin-left:25%;
+		}
+	
+}
